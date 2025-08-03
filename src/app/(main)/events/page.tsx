@@ -7,6 +7,7 @@ import { BadgeCheck, CalendarDays } from "lucide-react";
 import Image from "next/image";
 import dayjs from "dayjs";
 import { createClient } from "@supabase/supabase-js";
+import { Badge } from "@/components/common/ui/badge";
 
 const tierOrder = ["free", "silver", "gold", "platinum"] as const;
 type Tier = (typeof tierOrder)[number];
@@ -67,13 +68,19 @@ export default function EventsPage() {
   if (loading) return <p className="text-center mt-10">Loading events...</p>;
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">🎉 Available Events</h1>
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="max-w-full px-5 sm:px-10 mx-auto py-2 sm:py-8">
+      <div className="mb-6 flex flex-col gap-2">
+        <h1 className="text-3xl font-bold"> Available Events</h1>
+        <p className="text-lg">
+          Discover our curated collection of programming courses and workshops
+          designed to elevate your skills.
+        </p>
+      </div>
+      <div className="grid gap-x-8 gap-y-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {events.map((event) => (
           <div
             key={event.id}
-            className="border rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition"
+            className="border rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition flex flex-col h-[21rem] cursor-pointer"
           >
             <Image
               src={event.image_url}
@@ -82,16 +89,20 @@ export default function EventsPage() {
               height={250}
               className="w-full h-48 object-cover"
             />
-            <div className="p-4">
-              <h2 className="text-xl font-semibold mb-1">{event.title}</h2>
-              <p className="text-gray-600 text-sm mb-3">{event.description}</p>
-              <div className="flex justify-between text-sm text-gray-500">
+            <div className="p-4 flex flex-col justify-between flex-grow">
+              <div>
+                <h2 className="text-xl font-semibold mb-1">{event.title}</h2>
+                <p className="text-muted-foreground text-sm mb-3 line-clamp-3">
+                  {event.description}
+                </p>
+              </div>
+              <div className="flex justify-between text-sm text-gray-500 mt-auto py-2">
                 <span className="flex items-center gap-1">
-                  <CalendarDays className="w-4 h-4" />{" "}
+                  <CalendarDays className="w-4 h-4" />
                   {dayjs(event.event_date).format("MMM D, YYYY")}
                 </span>
-                <span
-                  className={`px-2 py-1 rounded-full text-xs font-semibold uppercase ${
+                <Badge
+                  className={`uppercase gap-1 inline-flex items-center ${
                     event.tier === "free"
                       ? "bg-gray-100 text-gray-600"
                       : event.tier === "silver"
@@ -101,8 +112,8 @@ export default function EventsPage() {
                       : "bg-purple-100 text-purple-800"
                   }`}
                 >
-                  <BadgeCheck className="inline w-4 h-4 mr-1" /> {event.tier}
-                </span>
+                  <BadgeCheck className="w-4 h-4" /> {event.tier}
+                </Badge>
               </div>
             </div>
           </div>

@@ -1,7 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Lock, BarChart2, PieChart, TrendingUp } from "lucide-react";
+import {
+  Mail,
+  Lock,
+  CalendarIcon,
+  Sparkles,
+  ShieldCheckIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSignUp } from "@clerk/nextjs";
@@ -103,13 +109,13 @@ export default function RegisterPage() {
         <div className="relative w-full h-full flex items-center justify-center p-12">
           <div className="text-white space-y-8 max-w-lg">
             <h1 className="text-5xl font-bold leading-tight">
-              Unlock the Power of Trackify
+              Discover Events That Match Your Journey
             </h1>
             <p className="text-xl text-blue-100">
-              Join thousands of teams growing smarter with real-time insights
+              Explore handpicked events designed to elevate your skills.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8">
-              {[BarChart2, PieChart, TrendingUp].map((Icon, i) => (
+              {[CalendarIcon, ShieldCheckIcon, Sparkles].map((Icon, i) => (
                 <div key={i} className="flex items-center space-x-4">
                   <div className="p-3 bg-white/10 rounded-lg">
                     <Icon className="w-6 h-6 text-white" />
@@ -117,9 +123,9 @@ export default function RegisterPage() {
                   <p className="text-sm text-blue-100">
                     {
                       [
-                        "Real-time Analytics",
-                        "Visual Reports",
-                        "Growth Insights",
+                        "Upcoming Workshops",
+                        "Tier-Based Access",
+                        "Exclusive Benefits",
                       ][i]
                     }
                   </p>
