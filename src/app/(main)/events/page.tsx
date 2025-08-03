@@ -51,8 +51,12 @@ export default function EventsPage() {
     })();
   }, [user, userTier]);
 
-  if (!isLoaded) {
+  if (!isLoaded || !user) {
     return <Loader />;
+  }
+  if (!userTier && user && isLoaded) {
+    router.push(pathNames.profile);
+    return;
   }
 
   return (

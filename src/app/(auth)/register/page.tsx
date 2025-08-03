@@ -9,6 +9,7 @@ import { RegisterLeftSideBar } from "@/components/auth/register/RegisterLeftSide
 import { VerifyOtpForm } from "@/components/auth/register/VerifyOtp";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/common/ui/button";
+import Loader from "@/components/common/ui/loader";
 
 interface IRegisterFormData {
   email: string;
@@ -32,13 +33,7 @@ export default function RegisterPage() {
   };
 
   if (!isLoaded) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-gray-500 text-sm">
-          Loading authentication system...
-        </p>
-      </div>
-    );
+    return <Loader />;
   }
 
   const handleBack = () => {

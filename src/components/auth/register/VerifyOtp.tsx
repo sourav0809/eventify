@@ -45,7 +45,7 @@ export function VerifyOtpForm({
       if (result.status === "complete") {
         await setActive({ session: result.createdSessionId! });
         toast.success("Account verified and signed in.");
-        router.push(pathNames.events);
+        router.push(pathNames.profile);
       } else {
         setFormError("Verification incomplete.");
       }

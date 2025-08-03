@@ -25,7 +25,12 @@ const ProfilePage = () => {
   const [selectedTier, setSelectedTier] = useState<TTier>("free");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  if (!isLoaded) {
+  if (isLoaded && !user) {
+    router.push(pathNames.login);
+    return null;
+  }
+
+  if (!isLoaded || !user) {
     return <Loader />;
   }
 
