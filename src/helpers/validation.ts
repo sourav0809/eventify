@@ -1,39 +1,32 @@
 import { z } from "zod";
+import { toast } from "sonner";
 
-export type ValidationResult<T> = {
-  success: boolean;
-  data?: T;
-  errors?: Record<string, string>;
-};
-
-export const validateForm = <T>(
+export function validateForm<T>(
   schema: z.ZodSchema<T>,
   data: unknown
-): ValidationResult<T> => {
-  try {
-    const validData = schema.parse(data);
-    return {
-      success: true,
-      data: validData,
-    };
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      const errors: Record<string, string> = {};
-      error?.errors?.forEach((err) => {
-        if (err.path) {
-          errors[err.path[0]] = err.message;
-        }
-      });
-      return {
-        success: false,
-        errors,
-      };
+): { success: boolean; error?: string; data?: T } {
+  const result = schema.safeParse(data);
+
+  if (!result.success) {
+    const fieldErrors: Record<string, string> = {};
+    let firstErrorMessage = "";
+
+    for (const err of result.error.issues) {
+      const fieldName = err.path.join(".");
+      fieldErrors[fieldName] = err.message;
+
+      if (!firstErrorMessage) {
+        firstErrorMessage = err.message;
+      }
     }
-    return {
-      success: false,
-      errors: {
-        _form: "An unexpected error occurred",
-      },
-    };
+
+    if (firstErrorMessage) {
+      toast.error(firstErrorMessage);
+    }
+    const error = result.error.issues[0]?.message || "Something went wrong.";
+
+    return { success: false, error: error };
   }
-};
+
+  return { success: true, data: result.data };
+}
