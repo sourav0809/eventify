@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { pathNames } from "@/constant/pathname.const";
 import { useClerk } from "@clerk/nextjs";
 import { useState } from "react";
+import { Button } from "../common/ui/button";
 
 const LogOutConfirmationDialog = () => {
   const router = useRouter();
@@ -62,11 +63,11 @@ const LogOutConfirmationDialog = () => {
         </DialogHeader>
 
         <DialogFooter className="flex gap-2 mt-6">
-          <button
+          <Button
             onClick={handleLogout}
             disabled={loading}
             className={cn(
-              "inline-flex items-center justify-center px-4 py-2 rounded-md bg-blue-500 text-white font-medium text-sm transition-colors duration-200",
+              "h-12 w-36 cursor-pointer inline-flex items-center justify-center px-4 py-2 rounded-md bg-blue-500 text-white font-medium text-sm transition-colors duration-200",
               loading ? "cursor-not-allowed opacity-80" : "hover:bg-blue-600"
             )}
           >
@@ -78,12 +79,12 @@ const LogOutConfirmationDialog = () => {
             ) : (
               "Logout"
             )}
-          </button>
+          </Button>
 
           <DialogTrigger asChild>
-            <button className="inline-flex items-center justify-center px-4 py-2 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground font-medium text-sm transition-colors duration-200">
+            <Button className="w-36 bg-gray-100 text-black h-12 cursor-pointer inline-flex items-center justify-center px-4 py-2 rounded-md border border-input hover:bg-accent hover:text-accent-foreground font-medium text-sm transition-colors duration-200">
               Cancel
-            </button>
+            </Button>
           </DialogTrigger>
         </DialogFooter>
       </DialogContent>
