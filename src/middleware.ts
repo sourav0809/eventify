@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 const isPublicPage = createRouteMatcher(["/login(.*)", "/register(.*)"]);
 const isProfilePage = createRouteMatcher(["/profile(.*)"]);
 const isEventsPage = createRouteMatcher(["/events(.*)"]);
-const isApiRoute = createRouteMatcher(["/api/(.*)"]); // Match API routes
+const isApiRoute = createRouteMatcher(["/api/(.*)"]);
 
 export default clerkMiddleware(async (auth, req) => {
   const { userId } = await auth();

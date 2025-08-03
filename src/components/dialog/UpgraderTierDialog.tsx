@@ -74,6 +74,7 @@ export const UpgradeTierDialog = ({
 
         setEvents(data as TEvent[]);
         setIsOpen(false);
+        setSelectedTier(undefined);
         toast.success(`Tier successfully upgraded to ${selectedTier}`);
       } catch (error: any) {
         toast.error(error.message || "Something went wrong");
