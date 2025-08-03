@@ -5,18 +5,13 @@ import { LoginLeftSideBar } from "@/components/auth/login/LoginLeftSide";
 import { LoginForm } from "@/components/auth/login/LoginForm";
 import Link from "next/link";
 import { pathNames } from "@/constant/pathname.const";
+import Loader from "@/components/common/ui/loader";
 
 export default function LoginPage() {
   const { signIn, setActive, isLoaded } = useSignIn();
 
   if (!isLoaded) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-gray-500 text-sm">
-          Loading authentication system...
-        </p>
-      </div>
-    );
+    return <Loader />;
   }
 
   return (
