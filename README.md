@@ -70,7 +70,7 @@ Use these credentials to test the app with different tiers:
 - **Free Tier**
 
   - Email: `pathaksourav231@gmail.com`
-  - Password: `Demo@1234`
+  - Password: `Demo@722160`
 
 ## Notes
 
