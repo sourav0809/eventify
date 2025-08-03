@@ -52,7 +52,11 @@ export default function EventsPage() {
   }, [user, userTier]);
 
   if (!isLoaded || !user) {
-    return <Loader />;
+    return (
+      <div className="w-[calc(100vw-6rem] h-full flex items-center justify-center">
+        <Loader />
+      </div>
+    );
   }
   if (!userTier && user && isLoaded) {
     router.push(pathNames.profile);
