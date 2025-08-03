@@ -12,9 +12,10 @@ import { EventLoader } from "@/components/event/EventLoader";
 import { pathNames } from "@/constant/pathname.const";
 import { toast } from "sonner";
 import { UpgradeTierDialog } from "@/components/dialog/UpgraderTierDialog";
+import Loader from "@/components/common/ui/loader";
 
 export default function EventsPage() {
-  const { user } = useUser();
+  const { user, isLoaded } = useUser();
   const [events, setEvents] = useState<TEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -49,6 +50,10 @@ export default function EventsPage() {
       }
     })();
   }, [user, userTier]);
+
+  if (!isLoaded) {
+    return <Loader />;
+  }
 
   return (
     <div className=" w-full sm:w-[calc(100vw-6rem)] px-5 sm:px-10 py-2 sm:py-8 overflow-y-hidden">
