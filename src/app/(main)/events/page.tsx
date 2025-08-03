@@ -25,11 +25,6 @@ export default function EventsPage() {
   useEffect(() => {
     if (!user || !userTier || !user?.id) return;
 
-    if (!userTier) {
-      router.push(pathNames.profile);
-      return;
-    }
-
     (async () => {
       try {
         const allowedTiers = TIERS.slice(0, TIERS.indexOf(userTier) + 1);
@@ -57,10 +52,6 @@ export default function EventsPage() {
         <Loader />
       </div>
     );
-  }
-  if (!userTier && user && isLoaded) {
-    router.push(pathNames.profile);
-    return;
   }
 
   return (
