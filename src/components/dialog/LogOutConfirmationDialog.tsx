@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Dialog,
   DialogContent,
@@ -10,17 +11,26 @@ import {
 } from "@/components/common/ui/dialog";
 import { cn } from "@/lib/utils";
 import { LogOut } from "lucide-react";
-import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { pathNames } from "@/constant/pathname.const";
 import { useClerk } from "@clerk/nextjs";
+import { useState } from "react";
+
 const LogOutConfirmationDialog = () => {
   const router = useRouter();
   const { signOut } = useClerk();
+  const [loading, setLoading] = useState(false);
 
-  const handleLogout = () => {
-    signOut();
-    router.push(pathNames.login);
+  const handleLogout = async () => {
+    try {
+      setLoading(true);
+      await signOut();
+      router.push(pathNames.login);
+    } catch (err) {
+      console.error("Logout failed:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -39,6 +49,7 @@ const LogOutConfirmationDialog = () => {
           </span>
         </button>
       </DialogTrigger>
+
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold leading-none tracking-tight">
@@ -49,15 +60,28 @@ const LogOutConfirmationDialog = () => {
             to access your dashboard.
           </DialogDescription>
         </DialogHeader>
+
         <DialogFooter className="flex gap-2 mt-6">
           <button
             onClick={handleLogout}
-            className="inline-flex cursor-pointer items-center justify-center px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white transition-colors duration-200 font-medium text-sm"
+            disabled={loading}
+            className={cn(
+              "inline-flex items-center justify-center px-4 py-2 rounded-md bg-blue-500 text-white font-medium text-sm transition-colors duration-200",
+              loading ? "cursor-not-allowed opacity-80" : "hover:bg-blue-600"
+            )}
           >
-            Logout
+            {loading ? (
+              <span className="flex items-center gap-2">
+                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                Logging out...
+              </span>
+            ) : (
+              "Logout"
+            )}
           </button>
+
           <DialogTrigger asChild>
-            <button className="inline-flex cursor-pointer items-center justify-center px-4 py-2 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors duration-200 font-medium text-sm">
+            <button className="inline-flex items-center justify-center px-4 py-2 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground font-medium text-sm transition-colors duration-200">
               Cancel
             </button>
           </DialogTrigger>
